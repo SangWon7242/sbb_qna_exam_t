@@ -98,4 +98,16 @@ public class MainController {
             .mapToObj(i -> "%d * %d = %d".formatted(finalDan, i, finalDan * i))
             .collect(Collectors.joining("<br>\n"));
   }
+
+  @GetMapping("/mbti/{name}")
+  @ResponseBody
+  public String showMbti(@PathVariable String name) {
+    return switch ( name ) {
+      case "홍길동" -> "INFP";
+      case "홍길순" -> "ENFP";
+      case "임꺽정" -> "INFJ";
+      case "박상원" -> "ESFJ";
+      default -> "모름";
+    };
+  }
 }

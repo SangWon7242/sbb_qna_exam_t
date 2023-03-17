@@ -12,9 +12,9 @@ public class MainController {
   @ResponseBody
   public String index() {
     // 서버에서 실행
-    System.out.println("Hello"); // 콘솔 출력
+    System.out.println("Hello");
 
     // 먼 미래에서 브라우저에서 실행
-    return "안녕하세요."; // 브라우저에서 출력(수정)
+    return "안녕하세요.asdasd";
   }
 }

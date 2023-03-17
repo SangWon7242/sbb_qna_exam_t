@@ -15,6 +15,6 @@ public class MainController {
     System.out.println("Hello"); // 콘솔 출력
 
     // 먼 미래에서 브라우저에서 실행
-    return "안녕하세요."; // 브라우저에서 출력
+    return "안녕하세요."; // 브라우저에서 출력(수정)
   }
 }

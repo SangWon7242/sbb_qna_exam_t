@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -234,9 +235,16 @@ class Article {
 }
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
+@Setter
 class Person {
   private int id;
   private int age;
   private String name;
+
+  public Person(int age, String name) {
+    this.age = age;
+    this.name = name;
+  }
 }

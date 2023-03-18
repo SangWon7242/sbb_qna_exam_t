@@ -9,12 +9,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
 public class MainController {
   private int increaseNo = -1;
+
   @RequestMapping("/sbb")
   // 아래 함수의 리턴값을 그대로 브라우저에 표시
   // 아래 함수의 리턴값을 문자열화 해서 브라우저 응답을 바디에 담는다.
@@ -31,29 +34,29 @@ public class MainController {
   @ResponseBody
   public String showPage1() {
     return """
-           <form method="POST" action="/page2">
-              <input type="number" name="age" placeholder="나이 입력" />
-              <input type="submit" value="page2로 POST 방식으로 이동" />
-           </form>           
-           """;
+        <form method="POST" action="/page2">
+           <input type="number" name="age" placeholder="나이 입력" />
+           <input type="submit" value="page2로 POST 방식으로 이동" />
+        </form>           
+        """;
   }
 
   @PostMapping("/page2")
   @ResponseBody
   public String showPage2Post(@RequestParam(defaultValue = "0") int age) {
     return """
-           <h1>입력된 나이 : %d</h1>
-           <h1>안녕하세요, POST 방식으로 오신걸 환영합니다.</h1>           
-           """.formatted(age);
+        <h1>입력된 나이 : %d</h1>
+        <h1>안녕하세요, POST 방식으로 오신걸 환영합니다.</h1>           
+        """.formatted(age);
   }
 
   @GetMapping("/page2")
   @ResponseBody
   public String showPage2Get(@RequestParam(defaultValue = "0") int age) {
     return """
-           <h1>입력된 나이 : %d</h1>
-           <h1>안녕하세요, GET 방식으로 오신걸 환영합니다.</h1>           
-           """.formatted(age);
+        <h1>입력된 나이 : %d</h1>
+        <h1>안녕하세요, GET 방식으로 오신걸 환영합니다.</h1>           
+        """.formatted(age);
   }
 
   @GetMapping("/plus")
@@ -88,24 +91,24 @@ public class MainController {
   @GetMapping("/gugudan")
   @ResponseBody
   public String showGugudan(Integer dan, Integer limit) {
-    if(dan == null) {
+    if (dan == null) {
       dan = 9;
     }
 
-    if(limit == null) {
+    if (limit == null) {
       limit = 9;
     }
 
     Integer finalDan = dan;
     return IntStream.rangeClosed(1, limit)
-            .mapToObj(i -> "%d * %d = %d".formatted(finalDan, i, finalDan * i))
-            .collect(Collectors.joining("<br>\n"));
+        .mapToObj(i -> "%d * %d = %d".formatted(finalDan, i, finalDan * i))
+        .collect(Collectors.joining("<br>\n"));
   }
 
   @GetMapping("/mbti/{name}")
   @ResponseBody
   public String showMbti(@PathVariable String name) {
-    return switch ( name ) {
+    return switch (name) {
       case "홍길순" -> {
         char j = 'J';
         yield "INF" + j;
@@ -134,20 +137,35 @@ public class MainController {
     return "세션변수 %s의 값은 %s 입니다.".formatted(name, value);
   }
 
+  private List<Article> articles = new ArrayList<>();
+
   @GetMapping("/addArticle")
   @ResponseBody
   public String addArticle(String title, String body) {
     Article article = new Article(title, body);
 
+    articles.add(article);
+
     return "%d번 게시물이 생성되었습니다.".formatted(article.getId());
+  }
+
+  @GetMapping("/article/{id}")
+  @ResponseBody
+  public Article getArticle(@PathVariable int id) {
+    Article article = articles // id가 1번인 게시물이 앞에서 3번째
+        .stream()
+        .filter(a -> a.getId() == id) // 1번
+        .findFirst()
+        .get();
+
+    return article;
   }
 }
 
 @AllArgsConstructor
+@Getter
 class Article {
   private static int lastId = 0;
-
-  @Getter
   private final int id;
   private final String title;
   private final String body;

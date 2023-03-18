@@ -159,7 +159,7 @@ public class MainController {
   @GetMapping("/article/{id}")
   @ResponseBody
   public Article getArticle(@PathVariable int id) {
-    Article article = articles // id가 1번인 게시물이 앞에서 3번째
+    Article article = articles
         .stream()
         .filter(a -> a.getId() == id) // 1번
         .findFirst()
@@ -171,7 +171,7 @@ public class MainController {
   @GetMapping("/modifyArticle/{id}")
   @ResponseBody
   public String modifyArticle(@PathVariable int id, String title, String body) {
-    Article article = articles // id가 1번인 게시물이 앞에서 3번째
+    Article article = articles
         .stream()
         .filter(a -> a.getId() == id) // 1번
         .findFirst()

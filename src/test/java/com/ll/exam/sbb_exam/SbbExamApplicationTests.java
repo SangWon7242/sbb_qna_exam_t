@@ -37,7 +37,9 @@ class SbbExamApplicationTests {
 		q2.setCreateDate(LocalDateTime.now());
 		questionRepository.save(q2);
 
+		questionRepository.disableForeignKeyChecks();
 		questionRepository.truncate();
+		questionRepository.enableForeignKeyChecks();
 	}
 
 	@Test

@@ -7,6 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
 public class AnswerRepositoryTests {
 
@@ -30,6 +32,20 @@ public class AnswerRepositoryTests {
 
   private void createSampleData() {
     QuestionRepositoryTests.createSampleData(questionRepository);
+
+    Question q = questionRepository.findById(1).get();
+
+    Answer a1 = new Answer();
+    a1.setContent("sbb는 질문답변 게시판입니다.");
+    a1.setQuestion(q);
+    a1.setCreateDate(LocalDateTime.now());
+    answerRepository.save(a1);
+
+    Answer a2 = new Answer();
+    a2.setContent("sbb에서는 주로 스프링관련 내용을 다룹니다.");
+    a2.setQuestion(q);
+    a2.setCreateDate(LocalDateTime.now());
+    answerRepository.save(a2);
   }
 
   @Test
@@ -41,6 +57,12 @@ public class AnswerRepositoryTests {
     a.setQuestion(q);
     a.setCreateDate(LocalDateTime.now());
     answerRepository.save(a);
+  }
+
+  @Test
+  void 조회() {
+    Answer a = answerRepository.findById(1).get();
+    assertThat(a.getContent()).isEqualTo("sbb는 질문답변 게시판입니다.");
   }
 
 }

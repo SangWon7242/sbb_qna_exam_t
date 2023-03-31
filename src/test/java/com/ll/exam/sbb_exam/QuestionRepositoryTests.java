@@ -1,5 +1,7 @@
 package com.ll.exam.sbb_exam;
 
+import com.ll.exam.sbb_exam.question.Question;
+import com.ll.exam.sbb_exam.question.QuestionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

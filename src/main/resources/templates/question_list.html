@@ -1,10 +1,18 @@
 <table border="1">
-  <tr>
-    <td>1</td>
-    <td>2</td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>2</td>
-  </tr>
+  <thead>
+    <tr>
+      <th>번호</th>
+      <th>제목</th>
+      <th>작성일지</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="question : ${questionList}">
+      <td>
+        <span th:text="${question.id}"></span>번
+      </td>
+      <td th:text="${question.subject}"></td>
+      <td th:text="${question.createDate}"></td>
+    </tr>
+  </tbody>
 </table>

@@ -1,5 +1,6 @@
 package com.ll.exam.sbb_exam.question;
 
+import com.ll.exam.sbb_exam.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-@Controller
+@Controller("/question")
 @RequiredArgsConstructor // 생성자 주입
 // 컨트롤러는 Repository가 있는지 몰라야 한다.
 // 서비스는 브라우저라는 것이 이 세상에 존재하는지 몰라야한다.
@@ -22,7 +23,7 @@ public class QuestionController {
   // @Autowired 필드 주입
   private final QuestionService questionService;
 
-  @GetMapping("/question/list")
+  @GetMapping("/list")
   // 이 자리에 @ResponseBody가 없으면 resources/templates/question_list.html 파일 뷰로 삼는다.
   public String list(Model model) {
     List<Question> questionList = questionService.getList();
@@ -34,7 +35,7 @@ public class QuestionController {
     return "question_list";
   }
 
-  @GetMapping("/question/detail/{id}")
+  @GetMapping("/detail/{id}")
   public String detail(Model model, @PathVariable int id) {
     Question question = questionService.getQuestion(id);
 

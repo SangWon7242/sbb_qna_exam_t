@@ -24,7 +24,7 @@ public class AnswerController {
     Question question = questionService.getQuestion(id);
 
     // 답변 등록 시작
-    this.answerService.create(question, content);
+    answerService.create(question, content);
     // 답변 등록 끝
 
     return "redirect:/question/detail/%d".formatted(id);

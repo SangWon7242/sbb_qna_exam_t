@@ -1,16 +1,15 @@
 package com.ll.exam.sbb_exam.question;
 
-import com.ll.exam.sbb_exam.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
-
-@Controller("/question")
+@RequestMapping("/question")
+@Controller
 @RequiredArgsConstructor // 생성자 주입
 // 컨트롤러는 Repository가 있는지 몰라야 한다.
 // 서비스는 브라우저라는 것이 이 세상에 존재하는지 몰라야한다.

@@ -17,12 +17,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AnswerController {
   private final QuestionService questionService;
+  private final AnswerService answerService;
 
   @PostMapping("/create/{id}")
   public String createAnswer(Model model, @PathVariable int id, String content) {
     Question question = questionService.getQuestion(id);
 
     // 답변 등록 시작
+    this.answerService.create(question, content);
     // 답변 등록 끝
 
     return "redirect:/question/detail/%d".formatted(id);

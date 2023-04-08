@@ -6,9 +6,6 @@
 <div layout:fragment="content" class="container my-3">
   <h5 class="my-3 border-bottom pb-2">질문 등록</h5>
 
-  <div class="alert alert-danger" role="alert" th:if="${subjectErrorMsg != null}" th:text="${subjectErrorMsg}"></div>
-  <div class="alert alert-danger" role="alert" th:if="${contentErrorMsg != null}" th:text="${contentErrorMsg}"></div>
-
   <form th:action="@{/question/create}" th:object="${questionForm}" method="POST">
     <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
       <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />

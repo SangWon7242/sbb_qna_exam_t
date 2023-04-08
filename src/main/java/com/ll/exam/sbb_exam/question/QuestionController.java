@@ -42,4 +42,9 @@ public class QuestionController {
 
     return "question_detail";
   }
+
+  @GetMapping("/create")
+  public String questionCreate() {
+    return "question_form";
+  }
 }

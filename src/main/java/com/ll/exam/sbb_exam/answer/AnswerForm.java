@@ -1,8 +1,9 @@
 package com.ll.exam.sbb_exam.answer;
 
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import javax.validation.constraints.NotEmpty;
 
 @AllArgsConstructor
 @Getter

@@ -1,10 +1,10 @@
 package com.ll.exam.sbb_exam.question;
 
 import com.ll.exam.sbb_exam.answer.Answer;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

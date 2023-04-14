@@ -1,11 +1,11 @@
 package com.ll.exam.sbb_exam.answer;
 
 import com.ll.exam.sbb_exam.question.Question;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter

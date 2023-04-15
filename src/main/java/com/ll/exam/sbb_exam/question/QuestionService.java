@@ -1,17 +1,16 @@
 package com.ll.exam.sbb_exam.question;
 
-import com.ll.exam.sbb_exam.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import com.ll.exam.sbb_exam.DataNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +26,7 @@ public class QuestionService {
     return this.questionRepository.findAll(pageable);
   }
 
-  public Question getQuestion(int id) {
+  public Question getQuestion(long id) {
     return questionRepository.findById(id)
         .orElseThrow(() -> new DataNotFoundException("no %d question not found".formatted(id)));
   }

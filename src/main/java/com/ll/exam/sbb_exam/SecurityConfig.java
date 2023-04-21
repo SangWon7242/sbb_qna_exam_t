@@ -17,14 +17,19 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests().requestMatchers(
-        new AntPathRequestMatcher("/**")).permitAll()
+            new AntPathRequestMatcher("/**")).permitAll()
         .and() // 문맥의 끝
         .csrf().ignoringRequestMatchers(
             new AntPathRequestMatcher("/h2-console/**"))
         .and()
         .headers()
         .addHeaderWriter(new XFrameOptionsHeaderWriter(
-            XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
+            XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
+        .and()
+        .formLogin()
+        .loginPage("/user/login")
+        .defaultSuccessUrl("/");
+
     return http.build();
   }
 

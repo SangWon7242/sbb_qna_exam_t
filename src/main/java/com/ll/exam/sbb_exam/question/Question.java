@@ -1,6 +1,7 @@
 package com.ll.exam.sbb_exam.question;
 
 import com.ll.exam.sbb_exam.answer.Answer;
+import com.ll.exam.sbb_exam.user.SiteUser;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,9 @@ public class Question {
   @Column(columnDefinition = "TEXT")
   private String content;
   private LocalDateTime createDate;
+
+  @ManyToOne
+  private SiteUser author;
 
   @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
   private List<Answer> answerList = new ArrayList<>();

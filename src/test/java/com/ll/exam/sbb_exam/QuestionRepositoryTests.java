@@ -49,7 +49,6 @@ public class QuestionRepositoryTests {
     q1.setContent("sbb에 대해서 알고 싶습니다.");
     q1.setAuthor(new SiteUser(2L));
     q1.setCreateDate(LocalDateTime.now());
-
     questionRepository.save(q1);
 
     Question q2 = new Question();

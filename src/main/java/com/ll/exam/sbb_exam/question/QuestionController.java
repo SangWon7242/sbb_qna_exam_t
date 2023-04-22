@@ -1,15 +1,18 @@
 package com.ll.exam.sbb_exam.question;
 
+import com.ll.exam.sbb_exam.DataNotFoundException;
 import com.ll.exam.sbb_exam.answer.AnswerForm;
 import com.ll.exam.sbb_exam.user.SiteUser;
 import com.ll.exam.sbb_exam.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.thymeleaf.extras.springsecurity5.util.SpringSecurityContextUtils;
 
 import javax.servlet.http.HttpSession;
@@ -51,6 +54,25 @@ public class QuestionController {
 
     model.addAttribute("question", question);
     return "question_detail";
+  }
+
+  @PreAuthorize("isAuthenticated()")
+  @GetMapping("/modify/{id}")
+  public String questionModify(QuestionForm questionForm, @PathVariable("id") Integer id, Principal principal) {
+    Question question = this.questionService.getQuestion(id);
+
+    if(question == null) {
+      throw new DataNotFoundException("%d번 질문은 존재하지 않습니다.");
+    }
+
+    if(!question.getAuthor().getUsername().equals(principal.getName())) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+    }
+
+    questionForm.setSubject(question.getSubject());
+    questionForm.setContent(question.getContent());
+
+    return "question_form";
   }
 
   @PreAuthorize("isAuthenticated()")

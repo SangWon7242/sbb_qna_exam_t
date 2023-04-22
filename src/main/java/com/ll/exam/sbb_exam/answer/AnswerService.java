@@ -1,8 +1,8 @@
 package com.ll.exam.sbb_exam.answer;
 
 import com.ll.exam.sbb_exam.question.Question;
+import com.ll.exam.sbb_exam.user.SiteUser;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.Store;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -12,10 +12,11 @@ import java.time.LocalDateTime;
 public class AnswerService {
   private final AnswerRepository answerRepository;
 
-  public void create(Question question, String content) {
+  public void create(Question question, String content, SiteUser author) {
     Answer answer = new Answer();
     answer.setContent(content);
     answer.setCreateDate(LocalDateTime.now());
+    answer.setAuthor(author);
     question.addAnswer(answer);
 
     answerRepository.save(answer);

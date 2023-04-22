@@ -1,7 +1,6 @@
 package com.ll.exam.sbb_exam;
 
 import com.ll.exam.sbb_exam.answer.AnswerRepository;
-import com.ll.exam.sbb_exam.question.Question;
 import com.ll.exam.sbb_exam.question.QuestionRepository;
 import com.ll.exam.sbb_exam.user.UserRepository;
 import com.ll.exam.sbb_exam.user.UserService;
@@ -10,8 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.time.LocalDateTime;
 
 @SpringBootTest
 public class UserServiceTests {

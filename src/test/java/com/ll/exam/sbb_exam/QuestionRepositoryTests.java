@@ -5,6 +5,7 @@ import com.ll.exam.sbb_exam.question.Question;
 import com.ll.exam.sbb_exam.question.QuestionRepository;
 import com.ll.exam.sbb_exam.user.SiteUser;
 import com.ll.exam.sbb_exam.user.UserRepository;
+import com.ll.exam.sbb_exam.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 public class QuestionRepositoryTests {
   @Autowired
+  private UserService userService;
+  @Autowired
   private QuestionRepository questionRepository;
 
   @Autowired
@@ -38,7 +41,9 @@ public class QuestionRepositoryTests {
     createSampleData();
   }
 
-  public static long createSampleData(QuestionRepository questionRepository) {
+  public static long createSampleData(UserService userService, QuestionRepository questionRepository) {
+    UserServiceTests.createSampleData(userService);
+
     Question q1 = new Question();
     q1.setSubject("sbb가 무엇인가요?");
     q1.setContent("sbb에 대해서 알고 싶습니다.");
@@ -46,8 +51,6 @@ public class QuestionRepositoryTests {
     q1.setCreateDate(LocalDateTime.now());
 
     questionRepository.save(q1);
-
-    System.out.println(q1.getId());
 
     Question q2 = new Question();
     q2.setSubject("스프링부트 모델 질문입니다.");
@@ -61,7 +64,7 @@ public class QuestionRepositoryTests {
   }
 
   private void createSampleData() {
-    lastSampleDataId = createSampleData(questionRepository);
+    lastSampleDataId = createSampleData(userService, questionRepository);
   }
 
   public static void clearData(UserRepository userRepository,

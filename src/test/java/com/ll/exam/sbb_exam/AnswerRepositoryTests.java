@@ -6,6 +6,7 @@ import com.ll.exam.sbb_exam.question.Question;
 import com.ll.exam.sbb_exam.question.QuestionRepository;
 import com.ll.exam.sbb_exam.user.SiteUser;
 import com.ll.exam.sbb_exam.user.UserRepository;
+import com.ll.exam.sbb_exam.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class AnswerRepositoryTests {
-
+  @Autowired
+  private UserService userService;
   @Autowired
   private QuestionRepository questionRepository;
   @Autowired
@@ -45,7 +47,7 @@ public class AnswerRepositoryTests {
   }
 
   private void createSampleData() {
-    QuestionRepositoryTests.createSampleData(questionRepository);
+    QuestionRepositoryTests.createSampleData(userService, questionRepository);
 
     // 관련 답변이 하나도 없는 상태에서 쿼리 발생
     Question q = questionRepository.findById(1L).get();
@@ -95,6 +97,8 @@ public class AnswerRepositoryTests {
   }
 
   @Test
+  @Transactional
+  @Rollback(false)
   void 관련된_question_조회() {
     Answer a = answerRepository.findById(1L).get();
     Question q = a.getQuestion();
@@ -107,6 +111,7 @@ public class AnswerRepositoryTests {
   @Rollback(false)
   void question으로부터_관련된_질문들_조회() {
     Question q = questionRepository.findById(1L).get();
+
     List<Answer> answerList = q.getAnswerList();
 
     assertThat(answerList.size()).isEqualTo(2);

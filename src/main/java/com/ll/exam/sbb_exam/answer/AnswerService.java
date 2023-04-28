@@ -1,11 +1,13 @@
 package com.ll.exam.sbb_exam.answer;
 
+import com.ll.exam.sbb_exam.DataNotFoundException;
 import com.ll.exam.sbb_exam.question.Question;
 import com.ll.exam.sbb_exam.user.SiteUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,5 +22,9 @@ public class AnswerService {
     question.addAnswer(answer);
 
     answerRepository.save(answer);
+  }
+
+  public Answer getAnswer(Long id) {
+    return answerRepository.findById(id).orElseThrow(() -> new DataNotFoundException("answer not found"));
   }
 }

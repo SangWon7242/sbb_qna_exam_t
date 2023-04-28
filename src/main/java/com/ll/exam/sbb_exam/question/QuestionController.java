@@ -61,7 +61,7 @@ public class QuestionController {
   public String questionModify(QuestionForm questionForm, @PathVariable("id") Integer id, Principal principal) {
     Question question = this.questionService.getQuestion(id);
 
-    if(!question.getAuthor().getUsername().equals(principal.getName())) {
+    if (!question.getAuthor().getUsername().equals(principal.getName())) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
     }
 
@@ -119,5 +119,15 @@ public class QuestionController {
 
     questionService.create(questionForm.getSubject(), questionForm.getContent(), siteUser);
     return "redirect:/question/list"; // 질문 저장후 질문목록으로 이동
+  }
+
+  @PreAuthorize("isAuthenticated()")
+  @GetMapping("/vote/{id}")
+  public String questionVote(Principal principal, @PathVariable("id") Long id) {
+    Question question = questionService.getQuestion(id);
+    SiteUser siteUser = userService.getUser(principal.getName());
+
+    questionService.vote(question, siteUser);
+    return "redirect:/question/detail/%d".formatted(id);
   }
 }

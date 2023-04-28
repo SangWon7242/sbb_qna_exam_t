@@ -64,9 +64,24 @@ public class AnswerController {
 
   @PreAuthorize("isAuthenticated()")
   @PostMapping("/modify/{id}")
-  @ResponseBody
   public String answerModify(@Valid AnswerForm answerForm, BindingResult bindingResult,
                              @PathVariable("id") Long id, Principal principal) {
-    return answerForm.getContent();
+
+    // 오류나면 되돌아가는 것이 아닌 다시 이 view를 보여줘라.
+    if (bindingResult.hasErrors()) {
+      return "answer_form";
+    }
+
+    Answer answer = answerService.getAnswer(id);
+    // 해당 id를 받아서 처리, 없으면 null 처리 해주는거고
+    // 없으면 여기서(AnswerService - getAnswer) 에러 처리를 해줌
+    // if null 을 안해도 상관없음
+
+    if (!answer.getAuthor().getUsername().equals(principal.getName())) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+    }
+
+    answerService.modify(answer, answerForm.getContent());
+    return "redirect:/question/detail/%d".formatted(answer.getQuestion().getId());
   }
 }

@@ -38,8 +38,8 @@ public class QuestionController {
 
   @GetMapping("/list")
   // 이 자리에 @ResponseBody가 없으면 resources/templates/question_list.html 파일 뷰로 삼는다.
-  public String list(Model model, @RequestParam(defaultValue = "0") int page) {
-    Page<Question> paging = questionService.getList(page);
+  public String list(String kw, Model model, @RequestParam(defaultValue = "0") int page) {
+    Page<Question> paging = questionService.getList(kw, page);
 
     // 미리애 실행된 question_list.html에서
     // questionList 라는 이름으로 questionList 변수를 사용할 수 있다.
@@ -59,7 +59,7 @@ public class QuestionController {
   @PreAuthorize("isAuthenticated()")
   @GetMapping("/modify/{id}")
   public String questionModify(QuestionForm questionForm, @PathVariable("id") Integer id, Principal principal) {
-    Question question = this.questionService.getQuestion(id);
+    Question question = questionService.getQuestion(id);
 
     if (!question.getAuthor().getUsername().equals(principal.getName())) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
@@ -79,7 +79,7 @@ public class QuestionController {
       return "question_form";
     }
 
-    Question question = this.questionService.getQuestion(id);
+    Question question = questionService.getQuestion(id);
     if (!question.getAuthor().getUsername().equals(principal.getName())) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
     }

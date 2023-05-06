@@ -1,5 +1,6 @@
 package com.ll.exam.sbb_exam.question;
 
+import com.ll.exam.sbb_exam.DataNotFoundException;
 import com.ll.exam.sbb_exam.user.SiteUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -7,11 +8,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import com.ll.exam.sbb_exam.DataNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,8 +37,17 @@ public class QuestionService {
   }
 
   public Question getQuestion(long id) {
-    return questionRepository.findById(id)
-        .orElseThrow(() -> new DataNotFoundException("no %d question not found".formatted(id)));
+//    return questionRepository.findById(id)
+//        .orElseThrow(() -> new DataNotFoundException("no %d question not found".formatted(id)));
+
+    Optional<Question> oquestion = questionRepository.findById(id);
+    if(oquestion.isPresent()) {
+      Question question = oquestion.get();
+      question.setHitCount(question.getHitCount() + 1);
+      return question;
+    } else {
+      throw new DataNotFoundException("no %d question not found".formatted(id));
+    }
   }
 
   public void create(String subject, String content, SiteUser author) {

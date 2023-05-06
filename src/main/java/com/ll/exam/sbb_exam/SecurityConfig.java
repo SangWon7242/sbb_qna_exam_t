@@ -1,5 +1,6 @@
 package com.ll.exam.sbb_exam;
 
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +18,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
+@AllArgsConstructor
 public class SecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -33,6 +35,8 @@ public class SecurityConfig {
         .formLogin()
         .loginPage("/user/login")
         .defaultSuccessUrl("/")
+        .and()
+        .oauth2Login()
         .and()
         .logout()
         .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
